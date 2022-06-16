@@ -3,9 +3,14 @@ package com.requiemdev.worshopmongo.domain;
 import java.io.Serializable;
 import java.util.Objects ;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "user") //Indica que essa entidade se trata de uma coleção do MongoDB
 public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
+	@Id //Indica que esse atributo sera a chave primaria da entidade
 	private String id;
 	private String name;
 	private String email;
