@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.requiemdev.worshopmongo.domain.Post;
 import com.requiemdev.worshopmongo.domain.User;
 import com.requiemdev.worshopmongo.dto.UserDTO;
 import com.requiemdev.worshopmongo.services.UserService;
@@ -29,7 +30,7 @@ public class UserResource {
 		List<User> list = service.findAll();
 		List<UserDTO> listDto = list.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
-	}
+	} 
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
 	public ResponseEntity<UserDTO> findById(@PathVariable String id) {
@@ -57,5 +58,11 @@ public class UserResource {
 		user.setId(id);
 		user = service.update(user);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(value="/{id}/posts", method = RequestMethod.GET)
+	public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+		User user = service.findById(id);
+		return ResponseEntity.ok().body(user.getPosts());
 	}
 }
