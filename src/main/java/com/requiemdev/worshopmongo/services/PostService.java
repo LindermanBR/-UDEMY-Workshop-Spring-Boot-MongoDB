@@ -1,5 +1,6 @@
 package com.requiemdev.worshopmongo.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,16 @@ public class PostService {
 	@Autowired // mecanismo de injeção de dependencia automatica do spring
 	private PostRepository repo;
 
+	public List<Post> findAll() {
+		return repo.findAll();
+	}
 
 	public Post findById(String id) {
 		Optional<Post> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 	}
 	
+	public List<Post>findByTitle(String text){
+		return repo.findByTitleContainingIgnoreCase(text);
+	}
 }
